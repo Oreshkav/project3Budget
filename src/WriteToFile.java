@@ -13,7 +13,7 @@ public class WriteToFile {
     }
 
     // получить из класса Money добавление статьи затрат (addMoving())
-    Money movingMoney = Money.addMoving();
+    Money movingMoney = Money.addMoneyMoving();
     String line =
         String.format(movingMoney.getDate() + SEP + movingMoney.getName() + SEP
             + movingMoney.getCategory() + SEP + movingMoney.getSum() + "\n");
@@ -29,8 +29,6 @@ public class WriteToFile {
     System.out.println("Здесь будет переход в главное меню.");
 //    Menu.menuStart();
   }
-
-
 
 
 }

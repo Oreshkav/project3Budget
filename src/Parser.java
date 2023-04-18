@@ -33,7 +33,7 @@ public class Parser {
       line = line.substring(lastSep + 2);
       lastSep = line.indexOf(SEP);
 
-      String sum = line.substring(0, lastSep);
+      int sum = Integer.parseInt(line.substring(0, lastSep));
 
       Money readedMovingLine = new Money(date, name, category, sum);
       listBudget.add(readedMovingLine);
