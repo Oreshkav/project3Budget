@@ -47,7 +47,7 @@ public class Main {
   }
 
   public static List<String> menuList() {
-    System.out.println("\nMENU");
+    System.out.println("\nМЕНЮ");
 
     List<String> menuMain = new ArrayList<>();
     menuMain.add("Добавить запись.");

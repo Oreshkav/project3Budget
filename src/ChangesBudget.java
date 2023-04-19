@@ -3,6 +3,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class ChangesBudget {
 
@@ -74,9 +75,9 @@ public class ChangesBudget {
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
 
-   for (String category : Budget.getCategories()){
-     System.out.println(category);
-   }
+    for (String category : Budget.getCategories()) {
+      System.out.println(category);
+    }
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Выберите категорию для вывода записей бюджета");
@@ -99,7 +100,8 @@ public class ChangesBudget {
     System.out.printf("\nИтого по категории %s расход = %s, доход = %s", categoryChoice,
         totalMinus, totalPlus);
 
-    Main.menuStart();
+    nextStep(ChangesBudget::printBudgetByCategory);
+//    Main.menuStart();
   }
 
   // печать всех строк бюджета с сортировкой 1-9 по дате, категории, названию
@@ -154,15 +156,29 @@ public class ChangesBudget {
     }
     fileWriter.close();
 
-    //выбор следующего действия или возврат в меню
-    System.out.println("\nНажмите 1 для продолжения удаления и 2 для выхода в меню");
+    nextStep(ChangesBudget::delRowFromBudget);
 
-    int vybor = Integer.parseInt(br.readLine());
-    if (vybor == 1) {
-      delRowFromBudget();
+////выбор следующего действия или возврат в меню
+//    System.out.println("\nНажмите 1 для продолжения удаления и 2 для выхода в меню");
+//
+//    int vybor = Integer.parseInt(br.readLine());
+//    if (vybor == 1) {
+//      delRowFromBudget();
+//    }
+//    Main.menuStart();
+  }
+
+
+  //выбор следующего действия или возврат в меню
+  public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("\nНажмите 1 для продолжения и 2 для выхода в меню");
+
+    int choice = Integer.parseInt(br.readLine());
+    switch (choice) {
+       case 1 -> nameMethod.run();
+       case 2 -> Main.menuStart();
+       default -> nextStep(nameMethod);
     }
-    Main.menuStart();
   }
 }
-
-
