@@ -17,6 +17,7 @@ public class Budget {
   private static final Set<String> categories = new TreeSet<>();
   private int sum;
 
+
   //условия стражники поставить, чтоб не нулл
 
   public Budget(LocalDate date, String name, String category, int sum) {
@@ -127,30 +128,11 @@ public class Budget {
       }
     }
 
-    String categoryFull;
-    if (category.length() < categoryLength) {
-      categoryFull =  formatString(category, categoryLength );
-    } else {
-      categoryFull = category;
-    }
+    String categoryFull = String.format("%1$-" + categoryLength + "s", category);
+    String nameFull = String.format("%1$-" + nameLength + "s", name);
 
-    String nameFull;
-    if (name.length() < nameLength) {
-      nameFull =  formatString(name, nameLength);
-    } else {
-      nameFull = name;
-    }
-    return date + "  " + categoryFull + " " + nameFull + " " + sum;
+    return date + "  " + categoryFull + "  " + nameFull + " " + sum;
 //    return date + " " + category + ", " + name + ", " + sum;
   }
 
-  public String formatString(String name, int maxLength) {
-    final StringBuffer buffer = new StringBuffer();
-    final int to = maxLength - name.length();
-    buffer.append(name);
-    for (int i = 0; i < to; i++) {
-      buffer.append(" ");
-    }
-    return buffer.toString();
-  }
 }

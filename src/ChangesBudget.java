@@ -6,6 +6,10 @@ import java.util.List;
 
 public class ChangesBudget {
 
+  public static final String ANSI_RED = "\u001B[31m";
+  public static final String ANSI_BLUE = "\u001B[34m";
+  public static final String ANSI_RESET = "\u001B[0m";
+
   final public static String SEP = "; ";
 
   //Создание и добавление записей в бюджет
@@ -121,10 +125,12 @@ public class ChangesBudget {
     for (Budget row : expenses) {
       if (row.getSum() > 0) {
         totalPlus = totalPlus + row.getSum();
+        System.out.println(ANSI_BLUE + row + ANSI_RESET);
       } else {
         totalMinus = totalMinus + row.getSum();
+        System.out.println(ANSI_RED + row + ANSI_RESET);
       }
-      System.out.println(row);
+//      System.out.println(row);
     }
     System.out.printf("\nИтого расход = %s, доход = %s", totalMinus, totalPlus);
 
