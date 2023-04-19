@@ -78,20 +78,5 @@ public class Money {
   public void setSum(int sum) {
     this.sum = sum;
   }
-  public class AddRemoveItem {
-    private List<String> items;
-
-    public AddRemoveItem() {
-      items = new ArrayList<>();
-    }
-
-    public void addItem(String item) {
-      items.add(item);
-    }
-
-    public void removeItem(String item) {
-      items.remove(item);
-    }
-  }
 }
 
