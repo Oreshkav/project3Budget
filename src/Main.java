@@ -33,7 +33,7 @@ public class Main {
       case 1 ->                                  //добавление записи в бюджет
           ChangesBudget.addMovingMoneyToFile();
       case 2 ->                                  //редактирование записей
-          System.out.println("Редактировать запись.");
+          System.out.println("Редактировать запись в разработке.");
       case 3 ->                                  //вывод списка бюджета
           ChangesBudget.printBudget();
       case 4 ->                                  //удаление строк из бюджета
