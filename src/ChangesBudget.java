@@ -3,7 +3,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
+
 
 public class ChangesBudget {
 
@@ -25,13 +25,15 @@ public class ChangesBudget {
     fileWriter.write(String.valueOf(line));
     fileWriter.close();
 
-    System.out.println("\nНажмите 1 для добавление ещё одной записи и 2 для выхода в меню");
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    int vybor = Integer.parseInt(br.readLine());
-    if (vybor == 1) {
-      addMovingMoneyToFile();
-    }
-    Main.menuStart();
+    nextStep(ChangesBudget::addMovingMoneyToFile);
+
+//    System.out.println("\nНажмите 1 для добавление ещё одной записи и 2 для выхода в меню");
+//    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//    int vybor = Integer.parseInt(br.readLine());
+//    if (vybor == 1) {
+//      addMovingMoneyToFile();
+//    }
+//    Main.menuStart();
   }
 
   //чтение записей из файла бюджет
@@ -66,6 +68,11 @@ public class ChangesBudget {
     }
     br.close();
     return listBudget;
+  }
+
+  //редактирование записей в бюджете
+  public static void editBudget() throws IOException, ParseException {
+    nextStep(ChangesBudget::editBudget);
   }
 
   // печать всех строк бюджета по выбранной категории
@@ -109,13 +116,25 @@ public class ChangesBudget {
 
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
+    int totalPlus = 0;
+    int totalMinus = 0;
+
     for (Budget row : expenses) {
+      if (row.getSum() > 0) {
+        totalPlus = totalPlus + row.getSum();
+      } else {
+        totalMinus = totalMinus + row.getSum();
+      }
       System.out.println(row);
     }
+    System.out.printf("\nИтого расход = %s, доход = %s", totalMinus, totalPlus);
+
+    nextStep(ChangesBudget::printBudget);
+
 //   for (String category : Budget.getCategories()){
 //     System.out.println(category);
 //   }
-    Main.menuStart();
+//    Main.menuStart();
   }
 
   //удаление записей из бюджета
@@ -168,7 +187,6 @@ public class ChangesBudget {
 //    Main.menuStart();
   }
 
-
   //выбор следующего действия или возврат в меню
   public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -176,9 +194,9 @@ public class ChangesBudget {
 
     int choice = Integer.parseInt(br.readLine());
     switch (choice) {
-       case 1 -> nameMethod.run();
-       case 2 -> Main.menuStart();
-       default -> nextStep(nameMethod);
+      case 1 -> nameMethod.run();
+      case 2 -> Main.menuStart();
+      default -> nextStep(nameMethod);
     }
   }
 }

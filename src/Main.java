@@ -8,11 +8,6 @@ import java.util.List;
 public class Main {
   public static void main(String[] args) throws IOException, ParseException {
 
-    // Класс РасходДоход
-    //    Наименование
-    //    Категория (Еда, Развлечения, Одежда, Обучение)
-    //    Сумма
-
     //Основное меню
 //    1. Добавить запись
 //    1.1.Внести доход
@@ -34,7 +29,7 @@ public class Main {
       case 1 ->                                  //добавление записи в бюджет
           ChangesBudget.addMovingMoneyToFile();
       case 2 ->                                  //редактирование записей
-          System.out.println("Редактировать запись в разработке.");
+          ChangesBudget.editBudget();
       case 3 ->                                  //вывод списка бюджета
           ChangesBudget.printBudget();
       case 4 ->                                  //вывод списка бюджета по категории
@@ -43,6 +38,7 @@ public class Main {
           ChangesBudget.delRowFromBudget();
       case 6 ->                                  //выход из программы
           System.out.println("Приходи еще, приноси денежек!");
+      default -> System.out.println("Когда определишься, тогда и приходи)");
     }
   }
 

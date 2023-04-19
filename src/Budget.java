@@ -15,6 +15,8 @@ public class Budget {
   private static final Set<String> categories = new TreeSet<>();
   private int sum;
 
+  //условия стражники поставить, чтоб не нулл
+
   public Budget(LocalDate date, String name, String category, int sum) {
     this.date = date;
     this.name = name;
@@ -54,6 +56,11 @@ public class Budget {
   public void setSum(int sum) {
     this.sum = sum;
   }
+
+
+  //Сделать тесты, если ничего не создавала, то пустое.
+  // Если создала 3 траты с разн категориями, то 3 категории
+  //если создала 3 траты с одинаковми категорями, то 1 категория.
 
   public static Set<String> getCategories() {
     return categories;
