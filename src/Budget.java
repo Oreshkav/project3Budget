@@ -99,4 +99,6 @@ public class Budget {
   public String toString() {
     return date + " " + category + ", " + name + ", " + sum;
   }
+  public Budget(){
+  }
 }
