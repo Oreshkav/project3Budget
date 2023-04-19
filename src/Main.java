@@ -6,6 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
+  public static final String ANSI_RED = "\u001B[31m";
+
+  public static final String ANSI_BLUE = "\u001B[34m";
+
+  public static final String ANSI_RESET = "\u001B[0m";
+
+  public static final String ANSI_CYAN = "\u001B[36m";
+
   public static void main(String[] args) throws IOException, ParseException {
 
     //Основное меню
@@ -17,8 +26,8 @@ public class Main {
 //    4. Вывести список затрат (с суммами и итоговой суммой)
 //        по категориям
 //    5. Сальдо (остаток денег)
-    System.out.println("\nПривет, мой друг!\nТы сегодня принес денег или потратил?\n" +
-        "Заходи, расскажешь!");
+    System.out.println(ANSI_CYAN + "\nПривет, мой друг!\nТы сегодня принес " +
+        "денег или потратил?\nЗаходи, расскажешь!" + ANSI_RESET);
     menuStart();
   }
 
@@ -48,7 +57,7 @@ public class Main {
   }
 
   public static List<String> menuList() {
-    System.out.println("\nМЕНЮ");
+    System.out.println(ANSI_RED + "\nМЕНЮ" + ANSI_RESET);
 
     List<String> menuMain = new ArrayList<>();
     menuMain.add("Добавить запись.");
@@ -60,7 +69,7 @@ public class Main {
     menuMain.add("Закончить работу с Бюджетом.");
 
     for (int i = 0; i < menuMain.size(); ++i) {
-      System.out.println(((i + 1) + ". " + menuMain.get(i)));
+      System.out.println(ANSI_BLUE + ((i + 1) + ". " + menuMain.get(i)) + ANSI_RESET);
     }
     return menuMain;
   }

@@ -9,6 +9,8 @@ public class ChangesBudget {
   public static final String ANSI_RED = "\u001B[31m";
   public static final String ANSI_BLUE = "\u001B[34m";
   public static final String ANSI_RESET = "\u001B[0m";
+  public static final String ANSI_GREEN = "\u001B[32m";
+  public static final String ANSI_PURPLE = "\u001B[35m";
 
   final public static String SEP = "; ";
 
@@ -125,14 +127,14 @@ public class ChangesBudget {
     for (Budget row : expenses) {
       if (row.getSum() > 0) {
         totalPlus = totalPlus + row.getSum();
-        System.out.println(ANSI_BLUE + row + ANSI_RESET);
+        System.out.println(ANSI_GREEN + row + ANSI_RESET);
       } else {
         totalMinus = totalMinus + row.getSum();
-        System.out.println(ANSI_RED + row + ANSI_RESET);
+        System.out.println(ANSI_PURPLE + row + ANSI_RESET);
       }
 //      System.out.println(row);
     }
-    System.out.printf("\nИтого расход = %s, доход = %s", totalMinus, totalPlus);
+    System.out.printf(ANSI_BLUE + "\nИтого расход = %s, доход = %s", totalMinus, totalPlus + ANSI_RESET);
 
     nextStep(ChangesBudget::printBudget);
 
