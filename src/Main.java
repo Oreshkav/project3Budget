@@ -17,9 +17,11 @@ public class Main {
 //    4. Вывести список затрат (с суммами и итоговой суммой)
 //        по категориям
 //    5. Сальдо (остаток денег)
-
+    System.out.println("\nПривет, мой друг!\nТы сегодня принес денег или потратил?\n" +
+        "Заходи, расскажешь!");
     menuStart();
   }
+
   public static void menuStart() throws IOException, ParseException {
 
     List<String> menuMain = menuList();
@@ -32,12 +34,15 @@ public class Main {
           ChangesBudget.editBudget();
       case 3 ->                                  //вывод списка бюджета
           ChangesBudget.printBudget();
-      case 4 ->                                  //вывод списка бюджета по категории
+      case 4 ->                                  //вывод списка бюджета за период
+          ChangesBudget.printBudgetByPeriod();
+      case 5 ->                                  //вывод списка бюджета по категории
           ChangesBudget.printBudgetByCategory();
-      case 5 ->                                  //удаление строк из бюджета
+      case 6 ->                                  //удаление строк из бюджета
           ChangesBudget.delRowFromBudget();
-      case 6 ->                                  //выход из программы
-          System.out.println("Приходи еще, приноси денежек!");
+      case 7 ->                                  //выход из программы
+          ChangesBudget.saldo();
+
       default -> System.out.println("Когда определишься, тогда и приходи)");
     }
   }
@@ -48,10 +53,11 @@ public class Main {
     List<String> menuMain = new ArrayList<>();
     menuMain.add("Добавить запись.");
     menuMain.add("Редактировать запись.");
-    menuMain.add("Вывести список записей бюджета.");
+    menuMain.add("Вывести список всех записей бюджета.");
+    menuMain.add("Вывести список всех записей бюджета за выбранный период.");
     menuMain.add("Вывести список записей бюджета по категории.");
     menuMain.add("Удалить запись.");
-    menuMain.add("Выйти.");
+    menuMain.add("Закончить работу с Бюджетом.");
 
     for (int i = 0; i < menuMain.size(); ++i) {
       System.out.println(((i + 1) + ". " + menuMain.get(i)));

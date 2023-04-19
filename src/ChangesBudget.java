@@ -187,6 +187,67 @@ public class ChangesBudget {
 //    Main.menuStart();
   }
 
+  //****   printBudgetByPeriod
+  // печать всех строк бюджета За период
+  public static void printBudgetByPeriod() throws IOException, ParseException {
+//    System.out.println("Перечень категорий бюджета:");
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    System.out.println("Введите дату начала периода: ");
+    String dateFirstString = br.readLine();
+    LocalDate dateFirst = LocalDate.parse(dateFirstString);
+
+    System.out.println("Введите дату окончания периода: ");
+    String dateLastString = br.readLine();
+    LocalDate dateLast = LocalDate.parse(dateLastString);
+
+    List<Budget> expenses = parser();
+    expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
+
+//    for (String category : Budget.getCategories()) {
+//      System.out.println(category);
+//    }
+
+
+//    System.out.println("Выберите категорию для вывода записей бюджета");
+//    String categoryChoice = br.readLine();
+    int totalPlus = 0;
+    int totalMinus = 0;
+
+//    System.out.println("Выбранной категории " + categoryChoice.toUpperCase() + " соответствуют " +
+//        "записи бюджета: ");
+    for (Budget row : expenses) {
+      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast)) {
+        if (row.getSum() > 0) {
+          totalPlus = totalPlus + row.getSum();
+        } else {
+          totalMinus = totalMinus + row.getSum();
+        }
+        System.out.println(row);
+      }
+    }
+    System.out.printf("\nИтого расход = %s, доход = %s", totalMinus, totalPlus);
+
+    nextStep(ChangesBudget::printBudgetByPeriod);
+  }
+
+  //**** printBudgetByPeriod
+
+  //******    посчитать дебет кредит
+  public static void saldo() throws IOException, ParseException {
+    List<Budget> expenses = parser();
+    expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
+    int total = 0;
+    for (Budget row : expenses) {
+      total = total + row.getSum();
+//      System.out.println(row);
+    }
+    System.out.printf("\nСальдо = %d", total);
+    System.out.println("\nПриходи еще, приноси денежек!");
+  }
+  //*********
+
+
   //выбор следующего действия или возврат в меню
   public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
