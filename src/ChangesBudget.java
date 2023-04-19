@@ -81,18 +81,28 @@ public class ChangesBudget {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Выберите категорию для вывода записей бюджета");
     String categoryChoice = br.readLine();
+    int totalPlus = 0;
+    int totalMinus = 0;
 
     System.out.println("Выбранной категории " + categoryChoice.toUpperCase() + " соответствуют " +
         "записи бюджета: ");
     for (Budget row : expenses) {
       if (row.getCategory().equals(categoryChoice)) {
+        if (row.getSum() > 0) {
+          totalPlus = totalPlus + row.getSum();
+        } else {
+          totalMinus = totalMinus + row.getSum();
+        }
         System.out.println(row);
       }
     }
+    System.out.printf("\nИтого по категории %s расход = %s, доход = %s", categoryChoice,
+        totalMinus, totalPlus);
+
     Main.menuStart();
   }
 
-  // печать всех строк бюджета с сортировкой по дате, по категории
+  // печать всех строк бюджета с сортировкой 1-9 по дате, категории, названию
   public static void printBudget() throws IOException, ParseException {
 
     List<Budget> expenses = parser();

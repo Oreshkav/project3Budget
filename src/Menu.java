@@ -24,7 +24,7 @@ public class Menu {
     BALANCE
     }
 
-  public static void (String[] args) throws IOException {
+  public static void NazvanieKakoeto(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.print("Выберите команду:");
     for (MenuCommands commands : MenuCommands.values()) {

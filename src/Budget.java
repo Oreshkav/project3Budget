@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,7 +59,8 @@ public class Budget {
     return categories;
   }
 
-  public static Budget addMoneyMoving() throws IOException, ParseException {
+  // создание записи класса Бюджет
+  public static Budget addMoneyMoving() throws IOException {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -83,13 +83,12 @@ public class Budget {
     } catch (NumberFormatException e) {
       System.err.println("Неправильный формат числа: " + e.getMessage());
     }
-    //Это доход или расход???  тогда + или сум  = -сум
+
     System.out.println("Это приход или расход? Введите + или - ");
     String debitCredit = br.readLine();
     if (debitCredit.equals("-")) {
       sum = - sum;
     }
-
 
     Budget rowAddMoneyMoving = new Budget(date, name, category, sum);
     System.out.printf("Добавлена запись: " + rowAddMoneyMoving);
