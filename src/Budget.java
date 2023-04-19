@@ -1,10 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Budget {
 
@@ -13,14 +13,15 @@ public class Budget {
   private String name;
 
   private String category;
-
+  private static final Set<String> categories = new TreeSet<>();
   private int sum;
 
-  public Budget(LocalDate date, String name, String category, int sum){
+  public Budget(LocalDate date, String name, String category, int sum) {
     this.date = date;
     this.name = name;
     this.category = category;
     this.sum = sum;
+    categories.add(category);
   }
 
   public LocalDate getDate() {
@@ -55,6 +56,10 @@ public class Budget {
     this.sum = sum;
   }
 
+  public static Set<String> getCategories() {
+    return categories;
+  }
+
   public static Budget addMoneyMoving() throws IOException, ParseException {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -62,7 +67,7 @@ public class Budget {
 //    LocalDate date = LocalDate.now();
     System.out.print("Введите дату в формате 2023-12-31: ");
     String dateString = br.readLine();
-    LocalDate date =  LocalDate.parse(dateString);
+    LocalDate date = LocalDate.parse(dateString);
 
     System.out.print("Введите описание движения денег: ");
     String name = br.readLine();
@@ -70,7 +75,7 @@ public class Budget {
     System.out.print("Введите категорию: ");
     String category = br.readLine();
 
-    System.out.print("Введите сумму, Расход - с Минусом, например -77: ");
+    System.out.print("Введите сумму: "); //, Расход - с Минусом, например -77:
     int sum = 0;
 
     try {
@@ -78,6 +83,13 @@ public class Budget {
     } catch (NumberFormatException e) {
       System.err.println("Неправильный формат числа: " + e.getMessage());
     }
+    //Это доход или расход???  тогда + или сум  = -сум
+    System.out.println("Это приход или расход? Введите + или - ");
+    String debitCredit = br.readLine();
+    if (debitCredit.equals("-")) {
+      sum = - sum;
+    }
+
 
     Budget rowAddMoneyMoving = new Budget(date, name, category, sum);
     System.out.printf("Добавлена запись: " + rowAddMoneyMoving);

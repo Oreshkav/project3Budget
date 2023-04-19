@@ -67,6 +67,31 @@ public class ChangesBudget {
     return listBudget;
   }
 
+  // печать всех строк бюджета по выбранной категории
+  public static void printBudgetByCategory() throws IOException, ParseException {
+    System.out.println("Перечень категорий бюджета:");
+
+    List<Budget> expenses = parser();
+    expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
+
+   for (String category : Budget.getCategories()){
+     System.out.println(category);
+   }
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Выберите категорию для вывода записей бюджета");
+    String categoryChoice = br.readLine();
+
+    System.out.println("Выбранной категории " + categoryChoice.toUpperCase() + " соответствуют " +
+        "записи бюджета: ");
+    for (Budget row : expenses) {
+      if (row.getCategory().equals(categoryChoice)) {
+        System.out.println(row);
+      }
+    }
+    Main.menuStart();
+  }
+
   // печать всех строк бюджета с сортировкой по дате, по категории
   public static void printBudget() throws IOException, ParseException {
 
@@ -75,6 +100,9 @@ public class ChangesBudget {
     for (Budget row : expenses) {
       System.out.println(row);
     }
+//   for (String category : Budget.getCategories()){
+//     System.out.println(category);
+//   }
     Main.menuStart();
   }
 

@@ -37,9 +37,11 @@ public class Main {
           System.out.println("Редактировать запись в разработке.");
       case 3 ->                                  //вывод списка бюджета
           ChangesBudget.printBudget();
-      case 4 ->                                  //удаление строк из бюджета
+      case 4 ->                                  //вывод списка бюджета по категории
+          ChangesBudget.printBudgetByCategory();
+      case 5 ->                                  //удаление строк из бюджета
           ChangesBudget.delRowFromBudget();
-      case 5 ->                                  //выход из программы
+      case 6 ->                                  //выход из программы
           System.out.println("Приходи еще, приноси денежек!");
     }
   }
@@ -50,7 +52,8 @@ public class Main {
     List<String> menuMain = new ArrayList<>();
     menuMain.add("Добавить запись.");
     menuMain.add("Редактировать запись.");
-    menuMain.add("Вывести список затрат/ поступлений.");
+    menuMain.add("Вывести список записей бюджета.");
+    menuMain.add("Вывести список записей бюджета по категории.");
     menuMain.add("Удалить запись.");
     menuMain.add("Выйти.");
 
