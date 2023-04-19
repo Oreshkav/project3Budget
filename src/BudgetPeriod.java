@@ -1,21 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
 public class BudgetPeriod {
-        public static void main(String[] args) {
-            List<String> monthList = new ArrayList<>();
-            monthList.add("Январь");
-            monthList.add("Февраль");
-            monthList.add("Март");
-            monthList.add("Апрель");
-            monthList.add("Май");
-            monthList.add("Июнь");
-            monthList.add("Июль");
-            monthList.add("Август");
-            monthList.add("Сентябрь");
-            monthList.add("Октябрь");
-            monthList.add("Ноябрь");
-            monthList.add("Декабрь");
+        private HashMap<Date, Double> budget;
 
-            System.out.println("Список месяцев: " + monthList);
+        public BudgetPeriod() {
+            budget = new HashMap<>();
         }
-}
+
+        public void addTask(Date date, double amount) {
+            budget.put(date, amount);
+        }
+
+        public double getTotal() {
+            double total = 0;
+            for (Date date : budget.keySet()) {
+                total += budget.get(date);
+            }
+            return total;
+        }
+    }
