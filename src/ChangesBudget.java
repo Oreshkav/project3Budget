@@ -1,4 +1,5 @@
 import java.io.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ public class ChangesBudget {
   final public static String SEP = "; ";
 
   //Создание и добавление записей в бюджет
-  public static void addMovingMoneyToFile() throws IOException {
+  public static void addMovingMoneyToFile() throws IOException, ParseException {
     File myBudgetFile = new File("res/budget.txt");
 
     FileWriter fileWriter = new FileWriter("res/budget.txt", true);
@@ -33,7 +34,7 @@ public class ChangesBudget {
   }
 
   //чтение записей из файла бюджет
-  public static List<Budget> parser() throws IOException {
+  public static List<Budget> parser() throws IOException, ParseException {
 
     File budgetFile = new File("res/budget.txt");
     if (!budgetFile.exists()) {
@@ -67,7 +68,7 @@ public class ChangesBudget {
   }
 
   // печать всех строк бюджета с сортировкой по дате, по категории
-  public static void printBudget() throws IOException {
+  public static void printBudget() throws IOException, ParseException {
 
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
@@ -78,7 +79,7 @@ public class ChangesBudget {
   }
 
   //удаление записей из бюджета
-  public static void delRowFromBudget() throws IOException {
+  public static void delRowFromBudget() throws IOException, ParseException {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

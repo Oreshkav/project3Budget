@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class Budget {
@@ -52,21 +55,22 @@ public class Budget {
     this.sum = sum;
   }
 
-  public static Budget addMoneyMoving() throws IOException {
+  public static Budget addMoneyMoving() throws IOException, ParseException {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    LocalDate date = LocalDate.now();
-//    System.out.print("Введите дату: ");
-//    LocalDate date = local  br.readLine();
+//    LocalDate date = LocalDate.now();
+    System.out.print("Введите дату в формате 2023-12-31: ");
+    String dateString = br.readLine();
+    LocalDate date =  LocalDate.parse(dateString);
 
-    System.out.print("Введите расход/приход денег: ");
+    System.out.print("Введите описание движения денег: ");
     String name = br.readLine();
 
     System.out.print("Введите категорию: ");
     String category = br.readLine();
 
-    System.out.print("Введите сумму: ");
+    System.out.print("Введите сумму, Расход - с Минусом, например -77: ");
     int sum = 0;
 
     try {
