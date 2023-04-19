@@ -30,21 +30,16 @@ public class Main {
     int numMenu = readMenu(menuMain);
 
     switch (numMenu) {
-      case 1:                                  //добавление записи в бюджет
-        ChangesBudget.addMovingMoneyToFile();
-        break;
-      case 2:                                  //редактирование записей
-        System.out.println("Редактировать запись.");
-        break;
-      case 3:                                  //вывод списка бюджета
-        ChangesBudget.printBudget();
-        break;
-      case 4:                                  //удаление строк из бюджета
-        ChangesBudget.delRowFromBudget();
-        break;
-      case 5:
-        System.out.println("Приходи еще, приноси денежек!");
-        break;
+      case 1 ->                                  //добавление записи в бюджет
+          ChangesBudget.addMovingMoneyToFile();
+      case 2 ->                                  //редактирование записей
+          System.out.println("Редактировать запись.");
+      case 3 ->                                  //вывод списка бюджета
+          ChangesBudget.printBudget();
+      case 4 ->                                  //удаление строк из бюджета
+          ChangesBudget.delRowFromBudget();
+      case 5 ->                                  //выход из программы
+          System.out.println("Приходи еще, приноси денежек!");
     }
   }
 
