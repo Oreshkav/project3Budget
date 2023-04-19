@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 
+
 public class Money {
 
   private LocalDate date;
@@ -76,6 +77,21 @@ public class Money {
 
   public void setSum(int sum) {
     this.sum = sum;
+  }
+  public class AddRemoveItem {
+    private List<String> items;
+
+    public AddRemoveItem() {
+      items = new ArrayList<>();
+    }
+
+    public void addItem(String item) {
+      items.add(item);
+    }
+
+    public void removeItem(String item) {
+      items.remove(item);
+    }
   }
 }
 
