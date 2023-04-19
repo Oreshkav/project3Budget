@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -94,7 +96,7 @@ public class Budget {
     System.out.println("Это приход или расход? Введите + или - ");
     String debitCredit = br.readLine();
     if (debitCredit.equals("-")) {
-      sum = - sum;
+      sum = -sum;
     }
 
     Budget rowAddMoneyMoving = new Budget(date, name, category, sum);
@@ -104,6 +106,51 @@ public class Budget {
 
   @Override
   public String toString() {
-    return date + " " + category + ", " + name + ", " + sum;
+
+    List<Budget> expenses = null;
+    try {
+      expenses = ChangesBudget.parser();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+    int categoryLength = 0;
+    int nameLength = 0;
+
+    for (Budget row : expenses) {
+      if (row.getCategory().length() > categoryLength) {
+        categoryLength = row.getCategory().length();
+      }
+      if (row.getName().length() > nameLength) {
+        nameLength = row.getName().length();
+      }
+    }
+
+    String categoryFull;
+    if (category.length() < categoryLength) {
+      categoryFull =  formatString(category, categoryLength );
+    } else {
+      categoryFull = category;
+    }
+
+    String nameFull;
+    if (name.length() < nameLength) {
+      nameFull =  formatString(name, nameLength);
+    } else {
+      nameFull = name;
+    }
+    return date + "  " + categoryFull + " " + nameFull + " " + sum;
+//    return date + " " + category + ", " + name + ", " + sum;
+  }
+
+  public String formatString(String name, int maxLength) {
+    final StringBuffer buffer = new StringBuffer();
+    final int to = maxLength - name.length();
+    buffer.append(name);
+    for (int i = 0; i < to; i++) {
+      buffer.append(" ");
+    }
+    return buffer.toString();
   }
 }
