@@ -97,7 +97,7 @@ public class ChangesBudget {
     System.out.println("\nВыбранной категории " + ANSI_PURPLE + categoryChoice.toUpperCase() +
         ANSI_RESET + " соответствуют записи бюджета: ");
     for (Budget row : expenses) {
-      if (row.getCategory().toUpperCase().equals(categoryChoice.toUpperCase())) {
+      if (row.getCategory().equalsIgnoreCase(categoryChoice)) {
         if (row.getSum() > 0) {
           totalPlus = totalPlus + row.getSum();
         } else {
@@ -279,7 +279,7 @@ public class ChangesBudget {
     System.out.println("\nЗаписи из категории " + ANSI_PURPLE + categoryChoice.toUpperCase()
         + ANSI_RESET + "за период с " + dateFirstString + " по " + dateLastString + ": ");
     for (Budget row : expenses) {
-      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast) && row.getCategory().toUpperCase().equals(categoryChoice.toUpperCase())) {
+      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast) && row.getCategory().equalsIgnoreCase(categoryChoice)) {
         if (row.getSum() > 0) {
           totalPlus = totalPlus + row.getSum();
         } else {
