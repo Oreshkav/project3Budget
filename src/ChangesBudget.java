@@ -1,6 +1,7 @@
 import java.io.*;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +22,17 @@ public class ChangesBudget {
     File myBudgetFile = new File("res/budget.txt");
 
     FileWriter fileWriter = new FileWriter("res/budget.txt", true);
-    if (!myBudgetFile.exists()) {
-      myBudgetFile.createNewFile();
+    if (!myBudgetFile.exists() && !myBudgetFile.createNewFile()) {
+      throw new RuntimeException("Не получилось создать файл: " + myBudgetFile.getName());
     }
 
+//    if (!myBudgetFile.exists()) {
+//      myBudgetFile.createNewFile();
+//    }
+
     Budget movingMoney = Budget.addMoneyMoving();
-    String line =
-        String.format(movingMoney.getDate() + SEP + movingMoney.getName() + SEP
-            + movingMoney.getCategory() + SEP + movingMoney.getSum() + "\n");
-    fileWriter.write(String.valueOf(line));
+    String line = movingMoney.getCsvString(SEP);
+    fileWriter.write(line);
     fileWriter.close();
 
     nextStep(ChangesBudget::addMovingMoneyToFile);
@@ -127,7 +130,7 @@ public class ChangesBudget {
       }
     }
 //    System.out.printf(ANSI_BLUE + "\nИтого расход = %s, доход = %s", totalMinus, totalPlus + ANSI_RESET);
-    printTotal(totalMinus,totalPlus);
+    printTotal(totalMinus, totalPlus);
 
     nextStep(ChangesBudget::printBudget);
 
@@ -167,23 +170,18 @@ public class ChangesBudget {
         System.out.println(((i + 1) + ". " + budget.get(i)));
       }
     }
-//    System.out.printf(ANSI_BLUE + "\nИтого расход = %s, доход = %s", totalMinus, totalPlus + ANSI_RESET);
-    printTotal(totalMinus,totalPlus);
+    printTotal(totalMinus, totalPlus);
 
     //перезаписать в файл
     File myBudgetFile = new File("res/budget.txt");
 
     FileWriter fileWriter = new FileWriter("res/budget.txt");
-    if (!myBudgetFile.exists()) {
-      myBudgetFile.createNewFile();
+    if (!myBudgetFile.exists() && !myBudgetFile.createNewFile()) {
+      throw new RuntimeException("Не получилось создать файл: " + myBudgetFile.getName());
     }
 
     for (int i = 0; i < budget.size(); ++i) {
-      Budget movingMoney = budget.get(i);
-      String line =
-          String.format(movingMoney.getDate() + SEP + movingMoney.getName() + SEP
-              + movingMoney.getCategory() + SEP + movingMoney.getSum() + "\n");
-      fileWriter.write(String.valueOf(line));
+      fileWriter.write(budget.get(i).getCsvString(SEP));
     }
     fileWriter.close();
 
@@ -194,13 +192,31 @@ public class ChangesBudget {
   public static void printBudgetByPeriod() throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    System.out.println("Введите дату начала периода: ");
+    System.out.println("Введите дату начала периода в формате 2023-12-31: ");
     String dateFirstString = br.readLine();
-    LocalDate dateFirst = LocalDate.parse(dateFirstString);
+    LocalDate dateFirst = null;
+    while (dateFirst == null) {
+      try {
+        dateFirst = LocalDate.parse(dateFirstString);
+      } catch (DateTimeParseException e) {
+        System.out.println("Неправильный формат даты: " + e.getMessage());
+        System.out.print(ANSI_PURPLE + "Введите дату в формате 2023-12-31: " + ANSI_RESET);
+        dateFirstString = br.readLine();
+      }
+    }
 
-    System.out.println("Введите дату окончания периода: ");
+    System.out.println("Введите дату окончания периода в формате 2023-12-31: ");
     String dateLastString = br.readLine();
-    LocalDate dateLast = LocalDate.parse(dateLastString);
+    LocalDate dateLast = null;
+    while (dateLast == null) {
+      try {
+        dateLast = LocalDate.parse(dateLastString);
+      } catch (DateTimeParseException e) {
+        System.out.println("Неправильный формат даты: " + e.getMessage());
+        System.out.print(ANSI_PURPLE + "Введите дату в формате 2023-12-31: " + ANSI_RESET);
+        dateLastString = br.readLine();
+      }
+    }
 
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
@@ -218,8 +234,7 @@ public class ChangesBudget {
         System.out.println(row);
       }
     }
-    //    System.out.printf(ANSI_BLUE + "\nИтого расход = %s, доход = %s", totalMinus, totalPlus + ANSI_RESET);
-    printTotal(totalMinus,totalPlus);
+    printTotal(totalMinus, totalPlus);
 
     nextStep(ChangesBudget::printBudgetByPeriod);
   }
@@ -239,14 +254,31 @@ public class ChangesBudget {
     System.out.println("Выберите категорию для вывода записей бюджета");
     String categoryChoice = br.readLine();
 
-    System.out.println("Введите дату начала периода: ");
+    System.out.println("Введите дату начала периода в формате 2023-12-31: ");
     String dateFirstString = br.readLine();
-    // поймать DateTimeParseException
-    LocalDate dateFirst = LocalDate.parse(dateFirstString);
+    LocalDate dateFirst = null;
+    while (dateFirst == null) {
+      try {
+        dateFirst = LocalDate.parse(dateFirstString);
+      } catch (DateTimeParseException e) {
+        System.out.println("Неправильный формат даты: " + e.getMessage());
+        System.out.print(ANSI_PURPLE + "Введите дату в формате 2023-12-31: " + ANSI_RESET);
+        dateFirstString = br.readLine();
+      }
+    }
 
-    System.out.println("Введите дату окончания периода: ");
+    System.out.println("Введите дату окончания периода в формате 2023-12-31: ");
     String dateLastString = br.readLine();
-    LocalDate dateLast = LocalDate.parse(dateLastString);
+    LocalDate dateLast = null;
+    while (dateLast == null) {
+      try {
+        dateLast = LocalDate.parse(dateLastString);
+      } catch (DateTimeParseException e) {
+        System.out.println("Неправильный формат даты: " + e.getMessage());
+        System.out.print(ANSI_PURPLE + "Введите дату в формате 2023-12-31: " + ANSI_RESET);
+        dateLastString = br.readLine();
+      }
+    }
 
     int totalPlus = 0;
     int totalMinus = 0;
@@ -263,7 +295,7 @@ public class ChangesBudget {
         System.out.println(row);
       }
     }
-    printTotal(totalMinus,totalPlus);
+    printTotal(totalMinus, totalPlus);
 
     nextStep(ChangesBudget::printBudgetByCategoryByPeriod);
   }

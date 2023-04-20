@@ -13,20 +13,9 @@ public class Main {
 
   public static final String ANSI_RESET = "\u001B[0m";
 
-  public static final String ANSI_CYAN = "\u001B[36m";
-
   public static void main(String[] args) throws IOException, ParseException {
 
-    //Основное меню
-//    1. Добавить запись
-//    1.1.Внести доход
-//    1.2.Внести расход
-//    2. Удалить запись
-//    3. Редактировать запись
-//    4. Вывести список затрат (с суммами и итоговой суммой)
-//        по категориям
-//    5. Сальдо (остаток денег)
-    System.out.println(ANSI_CYAN + "\nПривет, мой уважаемый друг!\nТы сегодня принес " +
+    System.out.println(ANSI_PURPLE + "\nПривет, мой уважаемый друг!\nТы сегодня принес " +
         "денег или потратил?\nЗаходи, расскажешь!" + ANSI_RESET);
     menuStart();
   }
@@ -58,6 +47,8 @@ public class Main {
     }
   }
 
+  // Список команд для вывода лучше собрать один раз (например, в конструкторе),
+  // а не создавать при каждом вызове метода заново
   public static List<String> menuList() {
     System.out.println(ANSI_PURPLE + "\nМЕНЮ" + ANSI_RESET);
 
@@ -86,6 +77,7 @@ public class Main {
         menuNumber = Integer.parseInt(br.readLine());
       } catch (NumberFormatException e) {
         System.err.println("\nНеправильный формат числа: " + e.getMessage());
+        menuList();
       }
     }
     return menuNumber;
