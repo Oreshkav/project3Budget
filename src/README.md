@@ -53,8 +53,13 @@
 ### *Class BudgetTest*
 Класс ``BudgetTest``тестирует программу
 + с помощью импорта `org.testng.annotations.Test` `org.junit.jupiter.api.Assertions`
-`java.time.LocalDate` `java.text.ParseException` и `java.io.IOException`;
+`java.time.LocalDate` `java.text.ParseException` и `java.io.IOException`,
+мы можем писать модульные тесты, создавая различные тестовые случаи
+для проверки поведения отдельной единицы исходного кода.
 
-
-
-
+### *Class BudgetChanges*
+Класс `BudgetChanges` может изменить ваш список бюджетных.
++ здесь человек может редактировать бюджетный список
++ человек может составить список бюджетов по категориям
++ Здесь человек может отсортировать список по дате
++ в программе также есть удаление записей из бюджета
