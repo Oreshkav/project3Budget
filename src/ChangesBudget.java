@@ -11,6 +11,7 @@ public class ChangesBudget {
   public static final String ANSI_RESET = "\u001B[0m";
   public static final String ANSI_GREEN = "\u001B[32m";
   public static final String ANSI_PURPLE = "\u001B[35m";
+  public static final String ANSI_CYAN = "\u001B[36m";
 
   final public static String SEP = "; ";
 
@@ -88,7 +89,7 @@ public class ChangesBudget {
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
 
     for (String category : Budget.getCategories()) {
-      System.out.println(category);
+      System.out.println(ANSI_CYAN + category + ANSI_RESET);
     }
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -109,8 +110,8 @@ public class ChangesBudget {
         System.out.println(row);
       }
     }
-    System.out.printf("\nИтого по категории %s расход = %s, доход = %s", categoryChoice,
-        totalMinus, totalPlus);
+    System.out.printf(ANSI_BLUE + "\nИтого по категории %s расход = %s, доход = %s", categoryChoice,
+        totalMinus, totalPlus + ANSI_RESET);
 
     nextStep(ChangesBudget::printBudgetByCategory);
 //    Main.menuStart();
@@ -127,10 +128,14 @@ public class ChangesBudget {
     for (Budget row : expenses) {
       if (row.getSum() > 0) {
         totalPlus = totalPlus + row.getSum();
-        System.out.println(ANSI_GREEN + row + ANSI_RESET);
+        System.out.println(row);
+//        System.out.println(ANSI_GREEN + row + ANSI_RESET);
+
       } else {
         totalMinus = totalMinus + row.getSum();
-        System.out.println(ANSI_PURPLE + row + ANSI_RESET);
+        System.out.println(row);
+//        System.out.println(ANSI_PURPLE + row + ANSI_RESET);
+
       }
 //      System.out.println(row);
     }
@@ -160,10 +165,22 @@ public class ChangesBudget {
     int indexDelBudget = Integer.parseInt(br.readLine());
     budget.remove(indexDelBudget - 1);
 
-    System.out.println("Списолк после удаления строки бюджета: ");
+    System.out.println("\nСписолк после удаления строки бюджета: ");
+    int totalPlus = 0;
+    int totalMinus = 0;
+
     for (int i = 0; i < budget.size(); ++i) {
-      System.out.println(((i + 1) + ". " + budget.get(i)));
+
+      if (budget.get(i).getSum() > 0) {
+        totalPlus = totalPlus + budget.get(i).getSum();
+        System.out.println(((i + 1) + ". " + budget.get(i)));
+      } else {
+        totalMinus = totalMinus + budget.get(i).getSum();
+        System.out.println(((i + 1) + ". " + budget.get(i)));
+      }
     }
+    System.out.printf(ANSI_BLUE + "\nИтого расход = %s, доход = %s", totalMinus, totalPlus + ANSI_RESET);
+
 
     //перезаписать в файл
     File myBudgetFile = new File("res/budget.txt");

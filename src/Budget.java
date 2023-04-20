@@ -1,11 +1,17 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Budget {
+
+  public static final String ANSI_RED = "\u001B[31m";
+  public static final String ANSI_RESET = "\u001B[0m";
+  public static final String ANSI_GREEN = "\u001B[32m";
 
   private LocalDate date;
 
@@ -14,6 +20,9 @@ public class Budget {
   private String category;
   private static final Set<String> categories = new TreeSet<>();
   private int sum;
+
+
+  //условия стражники поставить, чтоб не нулл
 
   public Budget(LocalDate date, String name, String category, int sum) {
     this.date = date;
@@ -55,6 +64,11 @@ public class Budget {
     this.sum = sum;
   }
 
+
+  //Сделать тесты, если ничего не создавала, то пустое.
+  // Если создала 3 траты с разн категориями, то 3 категории
+  //если создала 3 траты с одинаковми категорями, то 1 категория.
+
   public static Set<String> getCategories() {
     return categories;
   }
@@ -87,7 +101,7 @@ public class Budget {
     System.out.println("Это приход или расход? Введите + или - ");
     String debitCredit = br.readLine();
     if (debitCredit.equals("-")) {
-      sum = - sum;
+      sum = -sum;
     }
 
     Budget rowAddMoneyMoving = new Budget(date, name, category, sum);
@@ -97,8 +111,36 @@ public class Budget {
 
   @Override
   public String toString() {
-    return date + " " + category + ", " + name + ", " + sum;
+
+    List<Budget> expenses = null;
+    try {
+      expenses = ChangesBudget.parser();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+    int categoryLength = 0;
+    int nameLength = 0;
+
+    for (Budget row : expenses) {
+      if (row.getCategory().length() > categoryLength) {
+        categoryLength = row.getCategory().length();
+      }
+      if (row.getName().length() > nameLength) {
+        nameLength = row.getName().length();
+      }
+    }
+
+    String categoryFull = String.format("%1$-" + categoryLength + "s", category);
+    String nameFull = String.format("%1$-" + nameLength + "s", name);
+
+    if (sum <= 0) {
+      return ANSI_RED + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
+    } else {
+      return ANSI_GREEN + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
+    }
+//    return date + " " + category + ", " + name + ", " + sum;
   }
-  public Budget(){
-  }
+
 }
