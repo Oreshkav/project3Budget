@@ -32,10 +32,13 @@ public class Budget {
     this.date = Objects.requireNonNull(date);
 
     if (name == null) {
-      throw new NullPointerException("Имя не может быть null");
+      throw new NullPointerException("Описание не может быть null");
     }
     this.name = name;
 
+    if (category == null) {
+      throw new NullPointerException("Каиегория не может быть null");
+    }
     this.category = category;
     categories.add(category);
 
