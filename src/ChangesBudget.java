@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ChangesBudget {
 
-  public static final String ANSI_BLUE = "\u001B[34m";
+  public static final String BLUE_BOLD = "\033[1;34m";
 
   public static final String ANSI_RESET = "\u001B[0m";
 
@@ -25,10 +25,6 @@ public class ChangesBudget {
     if (!myBudgetFile.exists() && !myBudgetFile.createNewFile()) {
       throw new RuntimeException("Не получилось создать файл: " + myBudgetFile.getName());
     }
-
-//    if (!myBudgetFile.exists()) {
-//      myBudgetFile.createNewFile();
-//    }
 
     Budget movingMoney = Budget.addMoneyMoving();
     String line = movingMoney.getCsvString(SEP);
@@ -74,6 +70,10 @@ public class ChangesBudget {
 
   //редактирование записей в бюджете
   public static void editBudget() throws IOException, ParseException {
+    System.out.println(ANSI_PURPLE + "Друг мой, проще удалить старую и создать новую запись.");
+    System.out.println("При этом кнопок нажать прийдетмся меньше, чем для замены.");
+    System.out.println("Я художник, я так вижу " + ANSI_RESET + "\uD83D\uDE00");
+
     nextStep(ChangesBudget::editBudget);
   }
 
@@ -94,7 +94,7 @@ public class ChangesBudget {
     int totalPlus = 0;
     int totalMinus = 0;
 
-    System.out.println("Выбранной категории " + ANSI_PURPLE + categoryChoice.toUpperCase() +
+    System.out.println("\nВыбранной категории " + ANSI_PURPLE + categoryChoice.toUpperCase() +
         ANSI_RESET + " соответствуют записи бюджета: ");
     for (Budget row : expenses) {
       if (row.getCategory().equals(categoryChoice)) {
@@ -106,8 +106,7 @@ public class ChangesBudget {
         System.out.println(row);
       }
     }
-    System.out.printf(ANSI_BLUE + "Итого по категории %s расход = %s, доход = %s", categoryChoice,
-        totalMinus, totalPlus + ANSI_RESET);
+    printTotal(totalMinus, totalPlus);
 
     nextStep(ChangesBudget::printBudgetByCategory);
   }
@@ -129,15 +128,9 @@ public class ChangesBudget {
         System.out.println(row);
       }
     }
-//    System.out.printf(ANSI_BLUE + "\nИтого расход = %s, доход = %s", totalMinus, totalPlus + ANSI_RESET);
     printTotal(totalMinus, totalPlus);
 
     nextStep(ChangesBudget::printBudget);
-
-//   for (String category : Budget.getCategories()){
-//     System.out.println(category);
-//   }
-//    Main.menuStart();
   }
 
   //удаление записей из бюджета
@@ -180,8 +173,8 @@ public class ChangesBudget {
       throw new RuntimeException("Не получилось создать файл: " + myBudgetFile.getName());
     }
 
-    for (int i = 0; i < budget.size(); ++i) {
-      fileWriter.write(budget.get(i).getCsvString(SEP));
+    for (Budget row : budget) {
+      fileWriter.write(row.getCsvString(SEP));
     }
     fileWriter.close();
 
@@ -301,15 +294,15 @@ public class ChangesBudget {
   }
 
   //посчитать дебет кредит перед выходом
-  public static void saldo() throws IOException, ParseException {
+  public static void balance() throws IOException, ParseException {
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
     int total = 0;
     for (Budget row : expenses) {
       total = total + row.getSum();
     }
-    System.out.printf("\nСальдо = %d", total);
-    System.out.println("\nПриходи еще, приноси денежек!");
+    System.out.printf(BLUE_BOLD + "\nСальдо = %d", total);
+    System.out.println(ANSI_PURPLE + "\nДо свидания, друг мой! Приходи еще, приноси денежек!" + ANSI_RESET);
   }
 
   //выбор следующего действия или возврат в меню
@@ -326,7 +319,7 @@ public class ChangesBudget {
   }
 
   public static void printTotal(int totalMinus, int totalPlus) {
-    System.out.printf(ANSI_BLUE + "Итого расход = %s, доход = %s\nСальдо: %s", totalMinus,
+    System.out.printf(BLUE_BOLD + "Итого расход = %s, доход = %s\nСальдо: %s\n", totalMinus,
         totalPlus, totalMinus + totalPlus + ANSI_RESET);
   }
 }

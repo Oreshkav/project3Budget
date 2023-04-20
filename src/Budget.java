@@ -27,7 +27,6 @@ public class Budget {
   private static final Set<String> categories = new TreeSet<>();
   private final int sum;
 
-
   public Budget(LocalDate date, String name, String category, int sum) {
     this.date = Objects.requireNonNull(date);
 
@@ -125,8 +124,8 @@ public class Budget {
       // чтобы не считать каждый раз длины
       //задать вопрос
 
-      //расчет максимальной длины имени категории или названия для
-      //красивого вывода по столбцам
+      //расчет максимальной длины имени категории или названия
+      // для красивого вывода по столбцам
       int categoryLength = category.length();
       int nameLength = name.length();
 
@@ -138,8 +137,8 @@ public class Budget {
           nameLength = row.getName().length();
         }
       }
-      String categoryFormat = "%1$-" + categoryLength + "s";
-      String categoryFull = String.format(categoryFormat, category);
+
+      String categoryFull = String.format("%1$-" + categoryLength + "s", category);
       String nameFull = String.format("%1$-" + nameLength + "s", name);
 
       if (sum <= 0) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Main {
 
-  public static final String ANSI_PURPLE = "\u001B[35m";
+  public static final String PURPLE_BOLD = "\033[1;35m";
 
   public static final String ANSI_BLUE = "\u001B[34m";
 
@@ -15,7 +15,7 @@ public class Main {
 
   public static void main(String[] args) throws IOException, ParseException {
 
-    System.out.println(ANSI_PURPLE + "\nПривет, мой уважаемый друг!\nТы сегодня принес " +
+    System.out.println(PURPLE_BOLD + "\nПривет, мой уважаемый друг!\nТы сегодня принес " +
         "денег или потратил?\nЗаходи, расскажешь!" + ANSI_RESET);
     menuStart();
   }
@@ -41,7 +41,7 @@ public class Main {
       case 7 ->                                  //удаление строк из бюджета
           ChangesBudget.delRowFromBudget();
       case 8 ->                                  //выход из программы
-          ChangesBudget.saldo();
+          ChangesBudget.balance();
 
       default -> System.out.println("Когда определишься, тогда и приходи! :-D");
     }
@@ -50,7 +50,7 @@ public class Main {
   // Список команд для вывода лучше собрать один раз (например, в конструкторе),
   // а не создавать при каждом вызове метода заново
   public static List<String> menuList() {
-    System.out.println(ANSI_PURPLE + "\nМЕНЮ" + ANSI_RESET);
+    System.out.println(PURPLE_BOLD + "\nМЕНЮ" + ANSI_RESET);
 
     List<String> menuMain = new ArrayList<>();
     menuMain.add("Добавить запись.");
