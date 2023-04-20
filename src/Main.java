@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Main {
 
-  public static final String ANSI_RED = "\u001B[31m";
+  public static final String ANSI_PURPLE = "\u001B[35m";
 
   public static final String ANSI_BLUE = "\u001B[34m";
 
@@ -26,7 +26,7 @@ public class Main {
 //    4. Вывести список затрат (с суммами и итоговой суммой)
 //        по категориям
 //    5. Сальдо (остаток денег)
-    System.out.println(ANSI_CYAN + "\nПривет, мой друг!\nТы сегодня принес " +
+    System.out.println(ANSI_CYAN + "\nПривет, мой уважаемый друг!\nТы сегодня принес " +
         "денег или потратил?\nЗаходи, расскажешь!" + ANSI_RESET);
     menuStart();
   }
@@ -41,30 +41,33 @@ public class Main {
           ChangesBudget.addMovingMoneyToFile();
       case 2 ->                                  //редактирование записей
           ChangesBudget.editBudget();
-      case 3 ->                                  //вывод списка бюджета
+      case 3 ->                                  //вывод всего списка бюджета
           ChangesBudget.printBudget();
       case 4 ->                                  //вывод списка бюджета за период
           ChangesBudget.printBudgetByPeriod();
       case 5 ->                                  //вывод списка бюджета по категории
           ChangesBudget.printBudgetByCategory();
-      case 6 ->                                  //удаление строк из бюджета
+      case 6 ->                                  //вывод списка бюджета по категории за период
+          ChangesBudget.printBudgetByCategoryByPeriod();
+      case 7 ->                                  //удаление строк из бюджета
           ChangesBudget.delRowFromBudget();
-      case 7 ->                                  //выход из программы
+      case 8 ->                                  //выход из программы
           ChangesBudget.saldo();
 
-      default -> System.out.println("Когда определишься, тогда и приходи)");
+      default -> System.out.println("Когда определишься, тогда и приходи! :-D");
     }
   }
 
   public static List<String> menuList() {
-    System.out.println(ANSI_RED + "\nМЕНЮ" + ANSI_RESET);
+    System.out.println(ANSI_PURPLE + "\nМЕНЮ" + ANSI_RESET);
 
     List<String> menuMain = new ArrayList<>();
     menuMain.add("Добавить запись.");
     menuMain.add("Редактировать запись.");
-    menuMain.add("Вывести список всех записей бюджета.");
-    menuMain.add("Вывести список всех записей бюджета за выбранный период.");
-    menuMain.add("Вывести список записей бюджета по категории.");
+    menuMain.add("Вывести список всех записей.");
+    menuMain.add("Вывести список записей за выбранный период.");
+    menuMain.add("Вывести список записей по категории.");
+    menuMain.add("Вывести список записей по категории за выбранный период.");
     menuMain.add("Удалить запись.");
     menuMain.add("Закончить работу с Бюджетом.");
 

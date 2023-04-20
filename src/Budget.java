@@ -21,8 +21,12 @@ public class Budget {
   private static final Set<String> categories = new TreeSet<>();
   private int sum;
 
-
   //условия стражники поставить, чтоб не нулл
+
+  //Сделать тесты, если ничего не создавала, то пустое.
+  // Если создала 3 траты с разн категориями, то 3 категории
+  //если создала 3 траты с одинаковми категорями, то 1 категория.
+
 
   public Budget(LocalDate date, String name, String category, int sum) {
     this.date = date;
@@ -64,11 +68,6 @@ public class Budget {
     this.sum = sum;
   }
 
-
-  //Сделать тесты, если ничего не создавала, то пустое.
-  // Если создала 3 траты с разн категориями, то 3 категории
-  //если создала 3 траты с одинаковми категорями, то 1 категория.
-
   public static Set<String> getCategories() {
     return categories;
   }
@@ -78,18 +77,17 @@ public class Budget {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-//    LocalDate date = LocalDate.now();
     System.out.print("Введите дату в формате 2023-12-31: ");
     String dateString = br.readLine();
     LocalDate date = LocalDate.parse(dateString);
 
-    System.out.print("Введите описание движения денег: ");
+    System.out.print("Введите описание затраты или поступления денег: ");
     String name = br.readLine();
 
-    System.out.print("Введите категорию: ");
+    System.out.print("Введите категорию, к которй относится денежная операция: ");
     String category = br.readLine();
 
-    System.out.print("Введите сумму: "); //, Расход - с Минусом, например -77:
+    System.out.print("Введите сумму: ");
     int sum = 0;
 
     try {
@@ -112,35 +110,38 @@ public class Budget {
   @Override
   public String toString() {
 
-    List<Budget> expenses = null;
     try {
-      expenses = ChangesBudget.parser();
+      List<Budget> expenses = ChangesBudget.parser();
+
+      // предполагаю, что здесь нужно сделать как-то иначе,
+      // чтобы не считать каждый раз длины
+      //задать вопрос
+
+      //расчет максимальной длины имени категории или названия для
+      //красивого вывода по столбцам
+      int categoryLength = 0;
+      int nameLength = 0;
+
+      for (Budget row : expenses) {
+        if (row.getCategory().length() > categoryLength) {
+          categoryLength = row.getCategory().length();
+        }
+        if (row.getName().length() > nameLength) {
+          nameLength = row.getName().length();
+        }
+      }
+      String categoryFull = String.format("%1$-" + categoryLength + "s", category);
+      String nameFull = String.format("%1$-" + nameLength + "s", name);
+
+      if (sum <= 0) {
+        return ANSI_RED + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
+      } else {
+        return ANSI_GREEN + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
+      }
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (ParseException e) {
       throw new RuntimeException(e);
     }
-    int categoryLength = 0;
-    int nameLength = 0;
-
-    for (Budget row : expenses) {
-      if (row.getCategory().length() > categoryLength) {
-        categoryLength = row.getCategory().length();
-      }
-      if (row.getName().length() > nameLength) {
-        nameLength = row.getName().length();
-      }
-    }
-
-    String categoryFull = String.format("%1$-" + categoryLength + "s", category);
-    String nameFull = String.format("%1$-" + nameLength + "s", name);
-
-    if (sum <= 0) {
-      return ANSI_RED + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
-    } else {
-      return ANSI_GREEN + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
-    }
-//    return date + " " + category + ", " + name + ", " + sum;
   }
-
 }
