@@ -61,8 +61,8 @@ public class ChangesBudget {
 
       int sum = Integer.parseInt(line.substring(lastSep + 2));
 
-      Budget readedMovingLine = new Budget(date, name, category, sum);
-      listBudget.add(readedMovingLine);
+      Budget gettingMovingLine = new Budget(date, name, category, sum);
+      listBudget.add(gettingMovingLine);
     }
     br.close();
     return listBudget;
