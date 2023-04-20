@@ -69,7 +69,7 @@ public class Main {
     menuMain.add("Вывести список записей по категории.");
     menuMain.add("Вывести список записей по категории за выбранный период.");
     menuMain.add("Удалить запись.");
-    menuMain.add("Закончить работу с Бюджетом.");
+    menuMain.add("Закончить работу с программой.");
 
     for (int i = 0; i < menuMain.size(); ++i) {
       System.out.println(ANSI_BLUE + ((i + 1) + ". " + menuMain.get(i)) + ANSI_RESET);
