@@ -146,7 +146,7 @@ public class Budget {
       } else {
         return ANSI_GREEN + date + "  " + categoryFull + "  " + nameFull + " " + sum + ANSI_RESET;
       }
-    } catch (IOException | ParseException e) {
+    } catch (IOException | ParseException | InterruptedException e) {
       throw new RuntimeException(e);
     }
   }

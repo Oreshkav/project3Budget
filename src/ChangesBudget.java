@@ -18,7 +18,7 @@ public class ChangesBudget {
   final public static String SEP = "; ";
 
   //Создание и добавление записей в файл бюджет
-  public static void addMovingMoneyToFile() throws IOException, ParseException {
+  public static void addMovingMoneyToFile() throws IOException, ParseException, InterruptedException {
     File myBudgetFile = new File("res/budget.txt");
 
     FileWriter fileWriter = new FileWriter("res/budget.txt", true);
@@ -35,7 +35,7 @@ public class ChangesBudget {
   }
 
   //чтение записей из файла бюджет
-  public static List<Budget> parser() throws IOException, ParseException {
+  public static List<Budget> parser() throws IOException, ParseException, InterruptedException {
 
     File budgetFile = new File("res/budget.txt");
     if (!budgetFile.exists()) {
@@ -69,7 +69,7 @@ public class ChangesBudget {
   }
 
   //редактирование записей в бюджете
-  public static void editBudget() throws IOException, ParseException {
+  public static void editBudget() throws IOException, ParseException, InterruptedException {
     System.out.println(ANSI_PURPLE + "Друг мой, проще удалить старую и создать новую запись.");
     System.out.println("При этом кнопок нажать прийдетмся меньше, чем для замены.");
     System.out.println("Я художник, я так вижу " + ANSI_RESET + "\uD83D\uDE00");
@@ -78,7 +78,7 @@ public class ChangesBudget {
   }
 
   // печать всех строк бюджета по выбранной категории
-  public static void printBudgetByCategory() throws IOException, ParseException {
+  public static void printBudgetByCategory() throws IOException, ParseException, InterruptedException {
     System.out.println(ANSI_PURPLE + "Перечень категорий бюджета:" + ANSI_RESET);
 
     List<Budget> expenses = parser();
@@ -97,7 +97,7 @@ public class ChangesBudget {
     System.out.println("\nВыбранной категории " + ANSI_PURPLE + categoryChoice.toUpperCase() +
         ANSI_RESET + " соответствуют записи бюджета: ");
     for (Budget row : expenses) {
-      if (row.getCategory().equals(categoryChoice)) {
+      if (row.getCategory().toUpperCase().equals(categoryChoice.toUpperCase())) {
         if (row.getSum() > 0) {
           totalPlus = totalPlus + row.getSum();
         } else {
@@ -112,7 +112,7 @@ public class ChangesBudget {
   }
 
   // печать всех строк бюджета с сортировкой 1-9 по дате, категории, названию
-  public static void printBudget() throws IOException, ParseException {
+  public static void printBudget() throws IOException, ParseException, InterruptedException {
 
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
@@ -134,7 +134,7 @@ public class ChangesBudget {
   }
 
   //удаление записей из бюджета
-  public static void delRowFromBudget() throws IOException, ParseException {
+  public static void delRowFromBudget() throws IOException, ParseException, InterruptedException {
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -182,7 +182,7 @@ public class ChangesBudget {
   }
 
   // печать всех строк бюджета За период
-  public static void printBudgetByPeriod() throws IOException, ParseException {
+  public static void printBudgetByPeriod() throws IOException, ParseException, InterruptedException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     System.out.println("Введите дату начала периода в формате 2023-12-31: ");
@@ -233,7 +233,7 @@ public class ChangesBudget {
   }
 
   // печать всех строк бюджета по категории  за период
-  public static void printBudgetByCategoryByPeriod() throws IOException, ParseException {
+  public static void printBudgetByCategoryByPeriod() throws IOException, ParseException, InterruptedException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     List<Budget> expenses = parser();
@@ -279,7 +279,7 @@ public class ChangesBudget {
     System.out.println("\nЗаписи из категории " + ANSI_PURPLE + categoryChoice.toUpperCase()
         + ANSI_RESET + "за период с " + dateFirstString + " по " + dateLastString + ": ");
     for (Budget row : expenses) {
-      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast) && row.getCategory().equals(categoryChoice)) {
+      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast) && row.getCategory().toUpperCase().equals(categoryChoice.toUpperCase())) {
         if (row.getSum() > 0) {
           totalPlus = totalPlus + row.getSum();
         } else {
@@ -294,7 +294,7 @@ public class ChangesBudget {
   }
 
   //посчитать дебет кредит перед выходом
-  public static void balance() throws IOException, ParseException {
+  public static void balance() throws IOException, ParseException, InterruptedException {
     List<Budget> expenses = parser();
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
     int total = 0;
@@ -306,7 +306,7 @@ public class ChangesBudget {
   }
 
   //выбор следующего действия или возврат в меню
-  public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException {
+  public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException, InterruptedException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("\nНажмите 1 для продолжения и 2 для выхода в меню");
 

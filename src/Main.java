@@ -13,14 +13,18 @@ public class Main {
 
   public static final String ANSI_RESET = "\u001B[0m";
 
-  public static void main(String[] args) throws IOException, ParseException {
+  public static void main(String[] args) throws IOException, ParseException, InterruptedException {
 
     System.out.println(PURPLE_BOLD + "\nПривет, мой уважаемый друг!\nТы сегодня принес " +
         "денег или потратил?\nЗаходи, расскажешь!" + ANSI_RESET);
     menuStart();
   }
 
-  public static void menuStart() throws IOException, ParseException {
+  public static void menuStart() throws IOException, ParseException, InterruptedException {
+
+    for (int i = 0; i < 50; i++) {
+      System.out.println("");
+    }
 
     List<String> menuMain = menuList();
     int numMenu = readMenu(menuMain);
