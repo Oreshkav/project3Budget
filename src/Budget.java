@@ -81,7 +81,8 @@ public record Budget(LocalDate date, String name, String category, int sum) {
       sum = Integer.parseInt(br.readLine());
     }
 
-    System.out.println("Это приход или расход? Введите + или - ");
+    System.out.println("Это приход или расход?\nВведите \"-\" если расход или любой символ " +
+        "если прихода: ");
     String debitCredit = br.readLine();
     if (debitCredit.equals("-")) {
       sum = -sum;
@@ -97,10 +98,6 @@ public record Budget(LocalDate date, String name, String category, int sum) {
 
     try {
       List<Budget> expenses = FileReadWrite.parser();
-
-      // предполагаю, что здесь нужно сделать как-то иначе,
-      // чтобы не считать каждый раз длины
-      //задать вопрос
 
       //расчет максимальной длины имени категории или названия
       // для красивого вывода по столбцам
