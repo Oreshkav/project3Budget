@@ -20,16 +20,44 @@ public class Main {
     menuStart();
   }
 
+  private static final List<String> menuMain = new ArrayList<>();
+
+  static {
+    menuMain.add("Добавить запись.");
+    menuMain.add("Редактировать запись.");
+    menuMain.add("Вывести список всех записей.");
+    menuMain.add("Вывести список записей за выбранный период.");
+    menuMain.add("Вывести список записей по категории.");
+    menuMain.add("Вывести список записей по категории за выбранный период.");
+    menuMain.add("Удалить запись.");
+    menuMain.add("Закончить работу с программой.");
+  }
+
+  public static void menuList() {
+    System.out.println(PURPLE_BOLD + "\nМЕНЮ" + ANSI_RESET);
+
+    for (int i = 0; i < menuMain.size(); ++i) {
+      System.out.println(ANSI_BLUE + ((i + 1) + ". " + menuMain.get(i)) + ANSI_RESET);
+    }
+  }
+
   public static void menuStart() throws IOException, ParseException, InterruptedException {
 
-    for (int i = 0; i < 50; i++) {
-      System.out.println("");
+    menuList();
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int menuNumber = 0;
+    while (menuNumber < 1 || menuNumber > menuMain.size()) {
+      System.out.printf("Выберите действие и введите номер от 1 до %d:  -  ", menuMain.size());
+      try {
+        menuNumber = Integer.parseInt(br.readLine());
+      } catch (NumberFormatException e) {
+        System.err.println("\nНеправильный формат числа: " + e.getMessage());
+        menuList();
+      }
     }
 
-    List<String> menuMain = menuList();
-    int numMenu = readMenu(menuMain);
-
-    switch (numMenu) {
+    switch (menuNumber) {
       case 1 ->                                  //добавление записи в бюджет
           ChangesBudget.addMovingMoneyToFile();
       case 2 ->                                  //редактирование записей
@@ -49,41 +77,5 @@ public class Main {
 
       default -> System.out.println("Когда определишься, тогда и приходи! :-D");
     }
-  }
-
-  // Список команд для вывода лучше собрать один раз (например, в конструкторе),
-  // а не создавать при каждом вызове метода заново
-  public static List<String> menuList() {
-    System.out.println(PURPLE_BOLD + "\nМЕНЮ" + ANSI_RESET);
-
-    List<String> menuMain = new ArrayList<>();
-    menuMain.add("Добавить запись.");
-    menuMain.add("Редактировать запись.");
-    menuMain.add("Вывести список всех записей.");
-    menuMain.add("Вывести список записей за выбранный период.");
-    menuMain.add("Вывести список записей по категории.");
-    menuMain.add("Вывести список записей по категории за выбранный период.");
-    menuMain.add("Удалить запись.");
-    menuMain.add("Закончить работу с программой.");
-
-    for (int i = 0; i < menuMain.size(); ++i) {
-      System.out.println(ANSI_BLUE + ((i + 1) + ". " + menuMain.get(i)) + ANSI_RESET);
-    }
-    return menuMain;
-  }
-
-  public static int readMenu(List<String> menuMain) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    int menuNumber = 0;
-    while (menuNumber < 1 || menuNumber > menuMain.size()) {
-      System.out.printf("Выберите действие и введите номер от 1 до %d:  -  ", menuMain.size());
-      try {
-        menuNumber = Integer.parseInt(br.readLine());
-      } catch (NumberFormatException e) {
-        System.err.println("\nНеправильный формат числа: " + e.getMessage());
-        menuList();
-      }
-    }
-    return menuNumber;
   }
 }
