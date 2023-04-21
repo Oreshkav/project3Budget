@@ -51,7 +51,7 @@
   Следующая функция сравнивает объект 1 с объектом 2.
 
 ### *Class BudgetTest*
-Класс ``BudgetTest``тестирует программу
+Класс BudgetTest тестирует программу
 + с помощью импорта `org.testng.annotations.Test` `org.junit.jupiter.api.Assertions`
 `java.time.LocalDate` `java.text.ParseException` и `java.io.IOException`,
 мы можем писать модульные тесты, создавая различные тестовые случаи
