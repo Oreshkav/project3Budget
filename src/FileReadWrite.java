@@ -27,7 +27,7 @@ public class FileReadWrite {
     fileWriter.write(line);
     fileWriter.close();
 
-    ChangesBudget.nextStep(FileReadWrite::addMovingMoneyToFile);
+    Main.nextStep(FileReadWrite::addMovingMoneyToFile);
   }
 
   //чтение записей из файла бюджет
@@ -109,7 +109,7 @@ public class FileReadWrite {
     }
     fileWriter.close();
 
-    ChangesBudget.nextStep(FileReadWrite::delRowFromBudget);
+    Main.nextStep(FileReadWrite::delRowFromBudget);
   }
 
   //редактирование записей в бюджете
@@ -118,6 +118,6 @@ public class FileReadWrite {
     System.out.println("При этом кнопок нажать прийдетмся меньше, чем для замены.");
     System.out.println("Я художник, я так вижу " + ANSI_RESET + "\uD83D\uDE00");
 
-    ChangesBudget.nextStep(FileReadWrite::editBudget);
+    Main.nextStep(FileReadWrite::editBudget);
   }
 }

@@ -2,7 +2,6 @@ import java.io.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChangesBudget {
@@ -46,7 +45,7 @@ public class ChangesBudget {
     }
     printTotal(totalMinus, totalPlus);
 
-    nextStep(ChangesBudget::printBudgetByCategory);
+    Main.nextStep(ChangesBudget::printBudgetByCategory);
   }
 
   // печать всех строк бюджета с сортировкой 1-9 по дате, категории, названию
@@ -68,7 +67,7 @@ public class ChangesBudget {
     }
     printTotal(totalMinus, totalPlus);
 
-    nextStep(ChangesBudget::printBudget);
+    Main.nextStep(ChangesBudget::printBudget);
   }
 
   // печать всех строк бюджета За период
@@ -119,7 +118,7 @@ public class ChangesBudget {
     }
     printTotal(totalMinus, totalPlus);
 
-    nextStep(ChangesBudget::printBudgetByPeriod);
+    Main.nextStep(ChangesBudget::printBudgetByPeriod);
   }
 
   // печать всех строк бюджета по категории  за период
@@ -180,7 +179,7 @@ public class ChangesBudget {
     }
     printTotal(totalMinus, totalPlus);
 
-    nextStep(ChangesBudget::printBudgetByCategoryByPeriod);
+    Main.nextStep(ChangesBudget::printBudgetByCategoryByPeriod);
   }
 
   //посчитать дебет кредит перед выходом
@@ -193,19 +192,6 @@ public class ChangesBudget {
     }
     System.out.printf(BLUE_BOLD + "\nСальдо = %d", total);
     System.out.println(ANSI_PURPLE + "\nДо свидания, друг мой! Приходи еще, приноси денежек!" + ANSI_RESET);
-  }
-
-  //выбор следующего действия или возврат в меню
-  public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException, InterruptedException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("\nНажмите 1 для продолжения и 2 для выхода в меню");
-
-    int choice = Integer.parseInt(br.readLine());
-    switch (choice) {
-      case 1 -> nameMethod.run();
-      case 2 -> Main.menuStart();
-      default -> nextStep(nameMethod);
-    }
   }
 
   public static void printTotal(int totalMinus, int totalPlus) {

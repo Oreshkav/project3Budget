@@ -78,4 +78,17 @@ public class Main {
       default -> System.out.println("Когда определишься, тогда и приходи! :-D");
     }
   }
+
+  //выбор следующего действия или возврат в меню
+  public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException, InterruptedException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("\nНажмите 1 для продолжения и 2 для выхода в меню");
+
+    int choice = Integer.parseInt(br.readLine());
+    switch (choice) {
+      case 1 -> nameMethod.run();
+      case 2 -> Main.menuStart();
+      default -> nextStep(nameMethod);
+    }
+  }
 }
