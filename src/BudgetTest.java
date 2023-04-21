@@ -28,13 +28,26 @@ public class BudgetTest {
         Assertions.assertEquals(3, Budget.getCategories().size());
     }
     @Test
-    public void testNulls() throws IOException, ParseException {
+    public void testNulls1() throws IOException, ParseException {
         String dateString = "2023-12-31";
         LocalDate date = LocalDate.parse(dateString);
-        Budget budget1 = new Budget(null,"a","1",24);
-        Budget budget2 = new Budget(null,null,"1",24);
-        //Budget budget3 = new Budget(null,null,null,24);
+        try {
+            Budget budget1 = new Budget(date, null, "1", 24);
+        } catch (NullPointerException e) {
+            Assertions.assertEquals("Описание не может быть null", e.getMessage());
+        }
+    }
 
-        Assertions.assertEquals(3, Budget.getCategories().size());
+    @Test
+    public void testNulls2() throws IOException, ParseException {
+        String dateString = "2023-12-31";
+        LocalDate date = LocalDate.parse(dateString);
+
+        try {
+            Budget budget1 = new Budget(date, "a", null, 24);
+        } catch (NullPointerException e) {
+            Assertions.assertEquals("Каиегория не может быть null", e.getMessage());
+        }
+
     }
 }
