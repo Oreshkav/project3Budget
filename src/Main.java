@@ -83,12 +83,17 @@ public class Main {
   public static void nextStep(RunnableStep nameMethod) throws IOException, ParseException, InterruptedException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("\nНажмите 1 для продолжения и 2 для выхода в меню");
+    try {
+      int choice = Integer.parseInt(br.readLine());
 
-    int choice = Integer.parseInt(br.readLine());
-    switch (choice) {
-      case 1 -> nameMethod.run();
-      case 2 -> Main.menuStart();
-      default -> nextStep(nameMethod);
+      switch (choice) {
+        case 1 -> nameMethod.run();
+        case 2 -> Main.menuStart();
+        default -> nextStep(nameMethod);
+      }
+    } catch (NumberFormatException e) {
+      System.err.println("\nНеправильный формат числа: " + e.getMessage());
+      nextStep(nameMethod);
     }
   }
 }
