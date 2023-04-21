@@ -14,6 +14,28 @@ public class ChangesBudget {
 
   public static final String ANSI_PURPLE = "\u001B[35m";
 
+  // печать всех строк бюджета с сортировкой 1-9 по дате, категории, названию
+  public static void printBudget() throws IOException, ParseException, InterruptedException {
+
+    List<Budget> expenses = FileReadWrite.parser();
+    expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
+    int totalPlus = 0;
+    int totalMinus = 0;
+
+    for (Budget row : expenses) {
+      if (row.getSum() > 0) {
+        totalPlus = totalPlus + row.getSum();
+        System.out.println(row);
+      } else {
+        totalMinus = totalMinus + row.getSum();
+        System.out.println(row);
+      }
+    }
+    printTotal(totalMinus, totalPlus);
+
+    Main.nextStep(ChangesBudget::printBudget);
+  }
+
   // печать всех строк бюджета по выбранной категории
   public static void printBudgetByCategory() throws IOException, ParseException, InterruptedException {
     System.out.println(ANSI_PURPLE + "Перечень категорий бюджета:" + ANSI_RESET);
@@ -46,28 +68,6 @@ public class ChangesBudget {
     printTotal(totalMinus, totalPlus);
 
     Main.nextStep(ChangesBudget::printBudgetByCategory);
-  }
-
-  // печать всех строк бюджета с сортировкой 1-9 по дате, категории, названию
-  public static void printBudget() throws IOException, ParseException, InterruptedException {
-
-    List<Budget> expenses = FileReadWrite.parser();
-    expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
-    int totalPlus = 0;
-    int totalMinus = 0;
-
-    for (Budget row : expenses) {
-      if (row.getSum() > 0) {
-        totalPlus = totalPlus + row.getSum();
-        System.out.println(row);
-      } else {
-        totalMinus = totalMinus + row.getSum();
-        System.out.println(row);
-      }
-    }
-    printTotal(totalMinus, totalPlus);
-
-    Main.nextStep(ChangesBudget::printBudget);
   }
 
   // печать всех строк бюджета За период
