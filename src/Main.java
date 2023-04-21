@@ -59,9 +59,9 @@ public class Main {
 
     switch (menuNumber) {
       case 1 ->                                  //добавление записи в бюджет
-          ChangesBudget.addMovingMoneyToFile();
+          FileReadWrite.addMovingMoneyToFile();
       case 2 ->                                  //редактирование записей
-          ChangesBudget.editBudget();
+          FileReadWrite.editBudget();
       case 3 ->                                  //вывод всего списка бюджета
           ChangesBudget.printBudget();
       case 4 ->                                  //вывод списка бюджета за период
@@ -71,7 +71,7 @@ public class Main {
       case 6 ->                                  //вывод списка бюджета по категории за период
           ChangesBudget.printBudgetByCategoryByPeriod();
       case 7 ->                                  //удаление строк из бюджета
-          ChangesBudget.delRowFromBudget();
+          FileReadWrite.delRowFromBudget();
       case 8 ->                                  //выход из программы
           ChangesBudget.balance();
 

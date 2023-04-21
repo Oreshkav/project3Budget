@@ -118,7 +118,7 @@ public class Budget {
   public String toString() {
 
     try {
-      List<Budget> expenses = ChangesBudget.parser();
+      List<Budget> expenses = FileReadWrite.parser();
 
       // предполагаю, что здесь нужно сделать как-то иначе,
       // чтобы не считать каждый раз длины
