@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Budget {
+public record Budget(LocalDate date, String name, String category, int sum) {
 
   public static final String ANSI_RED = "\u001B[31m";
 
@@ -19,13 +19,7 @@ public class Budget {
 
   public static final String ANSI_PURPLE = "\u001B[35m";
 
-  private final LocalDate date;
-
-  private final String name;
-
-  private final String category;
   private static final Set<String> categories = new TreeSet<>();
-  private final int sum;
 
   public Budget(LocalDate date, String name, String category, int sum) {
     this.date = Objects.requireNonNull(date);
@@ -42,22 +36,6 @@ public class Budget {
     categories.add(category);
 
     this.sum = sum;
-  }
-
-  public LocalDate getDate() {
-    return date;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getCategory() {
-    return category;
-  }
-
-  public int getSum() {
-    return sum;
   }
 
   public static Set<String> getCategories() {
@@ -130,11 +108,11 @@ public class Budget {
       int nameLength = name.length();
 
       for (Budget row : expenses) {
-        if (row.getCategory().length() > categoryLength) {
-          categoryLength = row.getCategory().length();
+        if (row.category().length() > categoryLength) {
+          categoryLength = row.category().length();
         }
-        if (row.getName().length() > nameLength) {
-          nameLength = row.getName().length();
+        if (row.name().length() > nameLength) {
+          nameLength = row.name().length();
         }
       }
 

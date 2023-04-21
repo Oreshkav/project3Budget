@@ -86,11 +86,11 @@ public class FileReadWrite {
 
     for (int i = 0; i < budget.size(); ++i) {
 
-      if (budget.get(i).getSum() > 0) {
-        totalPlus = totalPlus + budget.get(i).getSum();
+      if (budget.get(i).sum() > 0) {
+        totalPlus = totalPlus + budget.get(i).sum();
         System.out.println(((i + 1) + ". " + budget.get(i)));
       } else {
-        totalMinus = totalMinus + budget.get(i).getSum();
+        totalMinus = totalMinus + budget.get(i).sum();
         System.out.println(((i + 1) + ". " + budget.get(i)));
       }
     }

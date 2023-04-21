@@ -6,13 +6,13 @@ public class BudgetComparator {
 
     @Override
     public int compare(Budget row1, Budget row2) {
-      if (!row1.getDate().equals(row2.getDate())) {
-        return row1.getDate().compareTo(row2.getDate());
+      if (!row1.date().equals(row2.date())) {
+        return row1.date().compareTo(row2.date());
       }
-      if (!row1.getCategory().equals(row2.getCategory())) {
-        return row1.getCategory().compareTo(row2.getCategory());
+      if (!row1.category().equals(row2.category())) {
+        return row1.category().compareTo(row2.category());
       }
-      return row1.getName().compareTo(row2.getName());
+      return row1.name().compareTo(row2.name());
     }
   }
 }

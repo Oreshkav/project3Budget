@@ -23,11 +23,11 @@ public class ChangesBudget {
     int totalMinus = 0;
 
     for (Budget row : expenses) {
-      if (row.getSum() > 0) {
-        totalPlus = totalPlus + row.getSum();
+      if (row.sum() > 0) {
+        totalPlus = totalPlus + row.sum();
         System.out.println(row);
       } else {
-        totalMinus = totalMinus + row.getSum();
+        totalMinus = totalMinus + row.sum();
         System.out.println(row);
       }
     }
@@ -56,11 +56,11 @@ public class ChangesBudget {
     System.out.println("\nВыбранной категории " + ANSI_PURPLE + categoryChoice.toUpperCase() +
         ANSI_RESET + " соответствуют записи бюджета: ");
     for (Budget row : expenses) {
-      if (row.getCategory().equalsIgnoreCase(categoryChoice)) {
-        if (row.getSum() > 0) {
-          totalPlus = totalPlus + row.getSum();
+      if (row.category().equalsIgnoreCase(categoryChoice)) {
+        if (row.sum() > 0) {
+          totalPlus = totalPlus + row.sum();
         } else {
-          totalMinus = totalMinus + row.getSum();
+          totalMinus = totalMinus + row.sum();
         }
         System.out.println(row);
       }
@@ -107,11 +107,11 @@ public class ChangesBudget {
     int totalMinus = 0;
 
     for (Budget row : expenses) {
-      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast)) {
-        if (row.getSum() > 0) {
-          totalPlus = totalPlus + row.getSum();
+      if (row.date().isAfter(dateFirst) && row.date().isBefore(dateLast)) {
+        if (row.sum() > 0) {
+          totalPlus = totalPlus + row.sum();
         } else {
-          totalMinus = totalMinus + row.getSum();
+          totalMinus = totalMinus + row.sum();
         }
         System.out.println(row);
       }
@@ -168,11 +168,11 @@ public class ChangesBudget {
     System.out.println("\nЗаписи из категории " + ANSI_PURPLE + categoryChoice.toUpperCase()
         + ANSI_RESET + "за период с " + dateFirstString + " по " + dateLastString + ": ");
     for (Budget row : expenses) {
-      if (row.getDate().isAfter(dateFirst) && row.getDate().isBefore(dateLast) && row.getCategory().equalsIgnoreCase(categoryChoice)) {
-        if (row.getSum() > 0) {
-          totalPlus = totalPlus + row.getSum();
+      if (row.date().isAfter(dateFirst) && row.date().isBefore(dateLast) && row.category().equalsIgnoreCase(categoryChoice)) {
+        if (row.sum() > 0) {
+          totalPlus = totalPlus + row.sum();
         } else {
-          totalMinus = totalMinus + row.getSum();
+          totalMinus = totalMinus + row.sum();
         }
         System.out.println(row);
       }
@@ -188,7 +188,7 @@ public class ChangesBudget {
     expenses.sort(new BudgetComparator.BudgetDateCategoryNameComparator());
     int total = 0;
     for (Budget row : expenses) {
-      total = total + row.getSum();
+      total = total + row.sum();
     }
     System.out.printf(BLUE_BOLD + "\nСальдо = %d", total);
     System.out.println(ANSI_PURPLE + "\nДо свидания, друг мой! Приходи еще, приноси денежек!" + ANSI_RESET);
